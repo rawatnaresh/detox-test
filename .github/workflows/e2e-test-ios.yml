@@ -8,31 +8,57 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: macos-latest
+    timeout-minutes: 15
+
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_12.3.app
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
 
       - name: Node
         uses: actions/setup-node@v1
         with:
           node-version: 12.18.4
 
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Rebuild detox
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: yarn detox clean-framework-cache && yarn detox build-framework-cache
+
       - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install
+
+      - name: Cache Pods
+        uses: actions/cache@v1
+        id: podcache
+        with:
+          path: ios/Pods
+          key: pods-${{ hashFiles('**/Podfile.lock') }}
+
+      - name: Update Pods
+        run: |
+          gem update cocoapods xcodeproj
+          cd ios && pod install && cd ..
 
       - name: Installing applesimutils
         run: |
           brew tap wix/brew
           brew install applesimutils
 
-      - name: Installing Pods
-        run: cd ios/ && pod install --repo-update && cd ..
-
-
       - name: Building App
-        run: node node_modules/.bin/detox build --configuration ios
+        run: yarn detox build --configuration ios
 
       - name: Testing App
-        run: node node_modules/.bin/detox test --configuration ios --record-videos all --cleanup
+        run: yarn detox test --configuration ios --record-videos all --cleanup --debug-synchronization 200
