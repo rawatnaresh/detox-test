@@ -35,4 +35,4 @@ jobs:
         run: node node_modules/.bin/detox build --configuration ios
 
       - name: Testing App
-        run: node node_modules/.bin/detox build --configuration ios --record-videos all --cleanup
+        run: node node_modules/.bin/detox test --configuration ios --record-videos all --cleanup
