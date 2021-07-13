@@ -8,56 +8,31 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
-
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_12.3.app
+    runs-on: macOS-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
+        uses: actions/checkout@v2
 
       - name: Node
         uses: actions/setup-node@v1
         with:
           node-version: 12.18.4
 
-      - name: Cache node modules
-        uses: actions/cache@v1
-        id: cache
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Rebuild detox
-        if: steps.cache.outputs.cache-hit == 'true'
-        run: yarn detox clean-framework-cache && yarn detox build-framework-cache
-
       - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install
-
-      - name: Cache Pods
-        uses: actions/cache@v1
-        id: podcache
-        with:
-          path: ios/Pods
-          key: pods-${{ hashFiles('**/Podfile.lock') }}
-
-      - name: Update Pods
-        run: |
-          gem update cocoapods xcodeproj
-          cd ios && pod install && cd ..
 
       - name: Installing applesimutils
         run: |
           brew tap wix/brew
           brew install applesimutils
 
+      - name: Installing Pods
+        run: cd ios/ && pod install --repo-update && cd ..
+
+
       - name: Building App
-        run: yarn detox build --configuration ios
+        run: node node_modules/.bin/detox build --configuration ios
 
       - name: Testing App
-        run: yarn detox test --configuration ios --record-videos all --cleanup
+        run: node node_modules/.bin/detox build --configuration ios --record-videos all --cleanup
