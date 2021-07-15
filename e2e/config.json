@@ -1,8 +1,9 @@
 {
-    "maxWorkers": 1,
-    "testEnvironment": "./environment",
+    "setupFilesAfterEnv": ["./setup.js"],
+    "testEnvironment": "./environment.js",
     "testRunner": "jest-circus/runner",
-    "testTimeout": 600000,
+    "testTimeout": 120000,
+    "preset": "react-native",
     "testRegex": "\\.e2e\\.js$",
     "reporters": ["detox/runners/jest/streamlineReporter"],
     "verbose": true

@@ -1,11 +1,6 @@
 /* eslint-disable no-undef */
 describe('Recorded suite', () => {
-  beforeAll(async () => {
-    await device.launchApp();
-  });
-
   it('Nav Test', async () => {
-    await device.reloadReactNative();
     await element(by.id('title1')).tap();
     await element(by.id('title2')).tap();
     await element(by.id('title3')).tap();
