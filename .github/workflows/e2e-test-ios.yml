@@ -60,4 +60,4 @@ jobs:
         run: yarn detox build --configuration ios
 
       - name: Testing App
-        run: yarn detox test --configuration ios --record-videos all --cleanup
+        run: yarn detox test --configuration ios --cleanup

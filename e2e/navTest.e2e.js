@@ -3,6 +3,11 @@ describe('Recorded suite', () => {
   beforeAll(async () => {
     await device.launchApp();
   });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
+
   it('Nav Test', async () => {
     await element(by.id('title1')).tap();
     await element(by.id('title2')).tap();
