@@ -101,6 +101,5 @@ describe('Recorded suite', () => {
     await element(by.id('title7')).tap();
     await element(by.id('title8')).tap();
     await element(by.id('title9')).tap();
-    await element(by.id('nextBtn')).tap();
   });
 });

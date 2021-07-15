@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {View, Text, Button, SafeAreaView} from 'react-native';
+import {View, Text, TouchableOpacity, SafeAreaView} from 'react-native';
 import 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
@@ -45,11 +45,12 @@ const Screen = ({route, navigation}) => {
       </View>
 
       {nextScreen < 10 && (
-        <Button
-          title={`Next ${nextScreen}`}
+        <TouchableOpacity
+          style={{backgroundColor: 'red', padding: 20}}
           testID="nextBtn"
-          onPress={() => navigation.navigate(nextScreen.toString())}
-        />
+          onPress={() => navigation.navigate(nextScreen.toString())}>
+          <Text>Next {nextScreen}</Text>
+        </TouchableOpacity>
       )}
     </SafeAreaView>
   );
