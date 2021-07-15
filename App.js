@@ -15,20 +15,39 @@ const Screen = ({route, navigation}) => {
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
         <Text style={{fontSize: 30}}>Screen {title}</Text>
-        <Text style={{fontSize: 30}}>Title 1</Text>
-        <Text style={{fontSize: 30}}>Title 2</Text>
-        <Text style={{fontSize: 30}}>Title 3</Text>
-        <Text style={{fontSize: 30}}>Title 4</Text>
-        <Text style={{fontSize: 30}}>Title 5</Text>
-        <Text style={{fontSize: 30}}>Title 6</Text>
-        <Text style={{fontSize: 30}}>Title 7</Text>
-        <Text style={{fontSize: 30}}>Title 8</Text>
-        <Text style={{fontSize: 30}}>Title 9</Text>
+        <Text style={{fontSize: 30}} testID="title1">
+          Title 1
+        </Text>
+        <Text style={{fontSize: 30}} testID="title2">
+          Title 2
+        </Text>
+        <Text style={{fontSize: 30}} testID="title3">
+          Title 3
+        </Text>
+        <Text style={{fontSize: 30}} testID="title4">
+          Title 4
+        </Text>
+        <Text style={{fontSize: 30}} testID="title5">
+          Title 5
+        </Text>
+        <Text style={{fontSize: 30}} testID="title6">
+          Title 6
+        </Text>
+        <Text style={{fontSize: 30}} testID="title7">
+          Title 7
+        </Text>
+        <Text style={{fontSize: 30}} testID="title8">
+          Title 8
+        </Text>
+        <Text style={{fontSize: 30}} testID="title9">
+          Title 9
+        </Text>
       </View>
 
       {nextScreen < 10 && (
         <Button
           title={`Next ${nextScreen}`}
+          testID="nextBtn"
           onPress={() => navigation.navigate(nextScreen.toString())}
         />
       )}
